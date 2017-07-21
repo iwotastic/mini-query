@@ -4,6 +4,8 @@
   var mqfunc = function(q) {
     var el = window.document.querySelector(q)
     
+    if (!el) throw new Error("Unknown element with query selector: \"" + q + "\".");
+    
     el.html = function(v) {
       if (typeof v === "string") {
         this.innerHTML = v
@@ -17,6 +19,14 @@
         this.value = v
       }else{
         return this.value
+      }
+    }.bind(el)
+    
+    el.attr = function(n, v) {
+      if (typeof v === "string") {
+        this.setAttribute(n, v)
+      }else{
+        return this.getAttribute(n)
       }
     }.bind(el)
     
